@@ -36,16 +36,13 @@ set -u
 
 print_help () {
     echo
-    echo "Usage: ./instantiate.sh [api-name] [group-id] [group-name] [api-repo-url] [maven-settings-id] [anypoint-host] [region]"
+    echo "Usage: ./instantiate.sh [api-name] [group-id] [api-repo-url] [anypoint-host]"
     echo
     echo "Options:"
     echo "api-name (required): the name of the project"
     echo "group-id: the business group id."
-    echo "group-name: the business group name."
     echo "api-repo-url: the url to the repo. default empty"
-    echo "maven-settings-id: the id of the maven global settings that will be used in the jenkins pipeline. default -> maven-global-settings"
     echo "anypoint-host: the anypoint host. default -> anypoint.mulesoft.com"
-    echo "region: the cloudhub region. default -> us-east-1"
     echo
 }
 
@@ -68,14 +65,6 @@ print_group_id_missing () {
     echo
 }
 
-print_group_name_missing () {
-    echo
-    echo " ______________________________________________________________________________________________________"
-    echo "| !! Group Name manual configuration !!"
-    echo "| * Don't forget to update the ANYPOINT_BUSINESS_GROUP variable in your Jenkinsfile file"
-    echo "|______________________________________________________________________________________________________"
-    echo
-}
 
 COLOR_GREEN="$(tput setaf 2)"
 COLOR_REST="$(tput sgr0)"
@@ -107,13 +96,6 @@ else
     GROUP_ID=""
 fi
 
-#BUSINESS GROUP NAME
-if [ "$#" -gt 2 ]; then
-    GROUP_NAME="$3"
-else
-    GROUP_NAME=""
-fi
-
 #API Repository
 if [ "$#" -gt 3 ]; then
     REPO_URL="$4"
@@ -121,25 +103,11 @@ else
     REPO_URL=""
 fi
 
-#MAVEN GLOBAL SETTINGS ID
-if [ "$#" -gt 4 ]; then
-    MVN_GLBL_SETT_ID="$5"
-else
-    MVN_GLBL_SETT_ID="maven-global-settings"
-fi
-
 #ANYPOINT HOST
 if [ "$#" -gt 5 ]; then
     ANYPOINT_HOST="$6"
 else
     ANYPOINT_HOST="anypoint.mulesoft.com"
-fi
-
-#REGION
-if [ "$#" -gt 6 ]; then
-    REGION="$7"
-else
-    REGION="us-east-1"
 fi
 
 
@@ -184,15 +152,8 @@ printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 
 echo;echo "############### ANYPOINT HOST UPDATE"
 echo "* Using host: $ANYPOINT_HOST"
-echo -n "* Updating host in pom and jenkinsfile files... "
+echo -n "* Updating host in pom files... "
 sed -i '' "s/{{ANYPOINT_HOST}}/$ANYPOINT_HOST/g" pom.xml
-sed -i '' "s/{{ANYPOINT_HOST}}/$ANYPOINT_HOST/g" Jenkinsfile
-printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
-
-echo;echo "############### ANYPOINT REGION UPDATE"
-echo "* Using region: $REGION"
-echo -n "* Updating region in jenkinsfile file... "
-sed -i '' "s/{{REGION}}/$REGION/g" Jenkinsfile
 printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 
 echo;echo "############### GROUP ID UPDATE"
@@ -203,21 +164,6 @@ else
     sed -i '' "s/{{GROUP_ID}}/$GROUP_ID/g" pom.xml
     printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 fi
-
-echo;echo "############### GROUP NAME UPDATE"
-if [ -z "$GROUP_NAME" ]; then
-    print_group_name_missing
-else
-    echo -n "* Updating Group Name... "
-    sed -i '' "s/{{GROUP_NAME}}/$GROUP_NAME/g" Jenkinsfile
-    printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
-fi
-
-echo;echo "############### MAVEN GLOBAL SETTINGS ID"
-echo "* Using maven global settings id: $MVN_GLBL_SETT_ID"
-echo -n "* Updating id in jenkinsfile file... "
-sed -i '' "s/{{MVN_GLBL_SETT_ID}}/$MVN_GLBL_SETT_ID/g" Jenkinsfile
-printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 
 
 echo;echo "############### GIT CONFIGURATION"
