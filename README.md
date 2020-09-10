@@ -7,8 +7,8 @@
 This project is a simple template that integrates some of MuleSoft best practices. It provides a set of standard minimalistic tools that should help you start your project quickly/efficiently.
 
   - **Plugins**
-      - mule-maven-plugin: enriched with a configuration that goes along with the Jenkinsfile (pipeline).
-      - maven-release-plugin: maven release management tool see the **Realse** section for more information on how to use it
+      - mule-maven-plugin: enriched with cloudhub deployment configuration.
+      - maven-release-plugin: maven release management tool see the **Release** section for more information on how to use it
   - **Structure**
       - Separation between interface and implementation
       - Global configuration file
@@ -18,10 +18,8 @@ This project is a simple template that integrates some of MuleSoft best practice
             - jsonlogger property files, used to configure the JSON Logger plugin
             - a property file for each environment DEV/QA/UAT. You can add as many as you want (just don't forget to update the jenkinsfile)
   - **Dependencies** Your organisation should add the following dependencies to exchange.
-      - json-logger
-      - common-error-handler
-  - **CI/CD**
-      - Jenkinsfile: a generic premade pipeline. Instructions to building the jenkins server are located in `ci-cd_setup.md` file.
+      - [json-logger](https://github.com/mulesoft-consulting/json-logger)
+      - [common-error-handler](https://github.com/mulesoft-catalyst/error-handler-plugin/tree/5.0.0)
 
 ### INSTANTIATE
 
@@ -33,7 +31,7 @@ $ chmod +x instantiate.sh
 Below is how to use the instantiation script:
 
 ```bash
-$ ./instantiate.sh [api-name] [group-id] [group-name] [api-repo-url] [maven-settings-id] [anypoint-host] [region]
+$ ./instantiate.sh [api-name] [group-id] [api-repo-url] [anypoint-host]
 ```
 
 Where the options are: 
@@ -42,11 +40,8 @@ Where the options are:
 |---------------|----------------|---------------|------------|
 |`api-name`     |**required** the name of the new project| my-project-name | |
 |`group-id`     |The business group id (cloudhub). | 0aefazeg0aazera2 |  |
-|`group-name`   |The business group name (cloudhub)| MyBusinessGroup  | |
 |`api-repo-url` |The repository url (ssh or http) of the api| git@github:user/repository.git | |
-|`maven-settings-id` | The Id of Maven global settings in jenkins. Refer to the `ci-cd_setup.md` file for more information on how to setup this id along with the pipeline.| `my-maven-global-settings` | maven-global-settings|
 |`anypoint-host`  | The anypoint host | anypoint.mulesoft.com | anypoint.mulesoft.com |
-|`region`         | The anypoint region | eu-central-1 | us-east-1 |
 
 
 > **Note:** that parameters should be given in the **right order**. Only the `api-name` is required. 
@@ -57,11 +52,8 @@ Example:
 $ ./instantiate.sh  \
       my-api-name \
       07ac71-97cb-46c0-ad91-105eb78e8 \
-      myBusinessGroupName \
       git@github:user/repository.git \  
-      maven-settings-id \
       eu1.anypoint.mulesoft.com \
-      eu-central-1
 ```
 
 The new project will be created in the same folder as the template folder. 
