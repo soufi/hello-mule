@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="MULE_LIB/07aa4c71-97cb-46c0-ad91-105eb50b78e8/common-error-handler/3.0.1"/>
-	<classpathentry kind="con" path="MULE_LIB/07aa4c71-97cb-46c0-ad91-105eb50b78e8/json-logger/2.0.1"/>
+	<classpathentry kind="con" path="MULE_LIB/{{GROUP_ID}}/common-error-handler/5.0.0"/>
+	<classpathentry kind="con" path="MULE_LIB/{{GROUP_ID}}/json-logger/2.0.1"/>
 	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-http-connector/1.2.0"/>
 	<classpathentry kind="con" path="MULE_LIB/org.mule.connectors/mule-sockets-connector/1.1.1"/>
 	<classpathentry kind="con" path="MULE_LIB/com.mulesoft.connectors/anypoint-mq-connector/3.1.0"/>
