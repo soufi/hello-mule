@@ -150,6 +150,11 @@ find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$OLD_ROOT"/"$N
 find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
 printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 
+echo -n "* Updating APIKIT Router configuration name... "
+find src/main/mule/global.xml  -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"name=\"Router\""/"name=\"$NEW_ROOT-config\""/g
+find src/main/mule/interface.xml  -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"config-ref=\"Router\""/"config-ref=\"$NEW_ROOT-config\""/g
+printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
+
 echo;echo "############### ANYPOINT HOST UPDATE"
 echo "* Using host: $ANYPOINT_HOST"
 echo -n "* Updating host in pom files... "
@@ -169,6 +174,7 @@ fi
 echo;echo "############### GIT CONFIGURATION"
 echo "* Initializing git..."
 git init
+git remote rm origin
 
 if [ -z "$REPO_URL" ]; then
     print_git_repo_missing
