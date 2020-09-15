@@ -12,7 +12,9 @@
             <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0c661d26-72dc-44ea-8fa7-3df5e70e7f2b">
                 <json-logger:logger doc:name="Log Error" doc:id="d76ea23b-c0cd-4fc8-b753-4e8e6fd6c299" config-ref="JSON_Logger_Config" message="Error" tracePoint="EXCEPTION" priority="ERROR" />
                 <set-variable value="#[error.errorMessage.payload.detailMessage]" doc:name="setErrorPayload" doc:id="9b587426-84d1-472e-b549-ed68788aa405" variableName="errorPayload" />
-                <error-handler-plugin:on-error doc:name="Process Error" doc:id="22354d84-c245-4564-9ad7-b4fc0bfdf5da" />
+                <error-handler-plugin:on-error doc:name="Process Error" doc:id="22354d84-c245-4564-9ad7-b4fc0bfdf5da"> 
+                    <error-handler-plugin:custom-errors><![CDATA[#[${file::dwl/customErrors.dwl}]]]></error-handler-plugin:custom-errors>
+                </error-handler-plugin:on-error>
                 <set-variable value="#[attributes.httpStatus]" doc:name="Set httpStatus" doc:id="27f160b9-fb37-488d-816a-5853e340170b" variableName="httpStatus" />
             </on-error-propagate>
         </error-handler>
