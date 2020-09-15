@@ -13,7 +13,7 @@ http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/m
 	<configuration-properties doc:name="Configuration properties" doc:id="1bc54e80-e546-4cac-b6e6-3cbecb0eea64" file="properties/common.properties" doc:description="Loading common properties config"/>
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="2c9a0979-6d4d-41a2-bde3-bfcd29dcbe01" file="properties/template-api-${mule.env}.properties" key="${mule.vault.key}" >
 	</secure-properties:config>
-	<apikit:config outboundHeadersMapName="outboundHeadersMapName" httpStatusVarName="httpStatus" doc:name="Router" doc:id="c4b7dea5-9968-455c-b82c-b65b93a9831e" name="Router" api="api/template-api.raml" parser="RAML"/>
+	<apikit:config outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" name="Router" api="template-api.raml"/>
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7651579c-483a-4e6a-89eb-0ade5f0d6232">
 		<http:listener-connection host="0.0.0.0" port="${http.port}" />
 	</http:listener-config>
