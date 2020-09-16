@@ -142,18 +142,31 @@ done < <(find ./src -not -path "*/.git*" -type f -name "*${TEMPLATE_FLAG}*" -pri
 
 # Replace project name in src/, pom and README files
 echo -n "* Replacing project name everywhere... "
-find ./src -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$OLD_ROOT"/"$NEW_ROOT"/g
-find ./src -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
-find pom.xml -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$OLD_ROOT"/"$NEW_ROOT"/g
-find pom.xml -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
-find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$OLD_ROOT"/"$NEW_ROOT"/g
-find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    find ./src -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$OLD_ROOT"/"$NEW_ROOT"/g
+    find ./src -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
+    find pom.xml -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$OLD_ROOT"/"$NEW_ROOT"/g
+    find pom.xml -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
+    find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$OLD_ROOT"/"$NEW_ROOT"/g
+    find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i '' s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
+else
+    find ./src -type f -print0 | LC_CTYPE=C xargs -0 sed -i s/"$OLD_ROOT"/"$NEW_ROOT"/g
+    find ./src -type f -print0 | LC_CTYPE=C xargs -0 sed -i s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
+    find pom.xml -type f -print0 | LC_CTYPE=C xargs -0 sed -i s/"$OLD_ROOT"/"$NEW_ROOT"/g
+    find pom.xml -type f -print0 | LC_CTYPE=C xargs -0 sed -i s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
+    find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i s/"$OLD_ROOT"/"$NEW_ROOT"/g
+    find README.md -type f -print0 | LC_CTYPE=C xargs -0 sed -i s/"$TEMPLATE_FLAG"/"$NEW_ROOT"/g
+fi
 printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 
 echo;echo "############### ANYPOINT HOST UPDATE"
 echo "* Using host: $ANYPOINT_HOST"
 echo -n "* Updating host in pom files... "
-sed -i '' "s/{{ANYPOINT_HOST}}/$ANYPOINT_HOST/g" pom.xml
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' "s/{{ANYPOINT_HOST}}/$ANYPOINT_HOST/g" pom.xml
+else
+    sed -i "s/{{ANYPOINT_HOST}}/$ANYPOINT_HOST/g" pom.xml
+fi
 printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 
 echo;echo "############### GROUP ID UPDATE"
@@ -161,8 +174,13 @@ if [ -z "$GROUP_ID" ]; then
     print_group_id_missing
 else
     echo -n "* Updating Group Id... "
-    sed -i '' "s/{{GROUP_ID}}/$GROUP_ID/g" pom.xml
-    sed -i '' "s/{{GROUP_ID}}/$GROUP_ID/g" .classpath
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "s/{{GROUP_ID}}/$GROUP_ID/g" pom.xml
+        sed -i '' "s/{{GROUP_ID}}/$GROUP_ID/g" .classpath
+    else
+        sed -i "s/{{GROUP_ID}}/$GROUP_ID/g" pom.xml
+        sed -i "s/{{GROUP_ID}}/$GROUP_ID/g" .classpath
+    fi
     printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
 fi
 
@@ -185,7 +203,11 @@ else
         fi
     done
     echo -n "** Updating pom.xml... "
-    sed -i '' "s/{{REPO_URL}}/$REPO_ESC_URL/g" pom.xml
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "s/{{REPO_URL}}/$REPO_ESC_URL/g" pom.xml
+    else
+        sed -i "s/{{REPO_URL}}/$REPO_ESC_URL/g" pom.xml
+    fi
     printf '%s%s%s\n' $COLOR_GREEN 'done' $COLOR_REST
     echo -n "** Updating git remote url... "
     git remote set-url origin "$REPO_URL"
