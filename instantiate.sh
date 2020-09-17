@@ -4,11 +4,8 @@
 #      $ ./instantiate.sh  \
 #           my-api-name \
 #           07ac71-97cb-46c0-ad91-105eb78e8 \
-#           myBusinessGroupName \
 #           git@github:user/repository.git \  
-#           maven-settings-id \
 #           eu1.anypoint.mulesoft.com \
-#           eu-central-1 
 
 # This script executes the following steps:
 # 1. Creates a new project in the parent folder where this template is located
@@ -97,15 +94,15 @@ else
 fi
 
 #API Repository
-if [ "$#" -gt 3 ]; then
-    REPO_URL="$4"
+if [ "$#" -gt 2 ]; then
+    REPO_URL="$3"
 else
     REPO_URL=""
 fi
 
 #ANYPOINT HOST
-if [ "$#" -gt 5 ]; then
-    ANYPOINT_HOST="$6"
+if [ "$#" -gt 3 ]; then
+    ANYPOINT_HOST="$4"
 else
     ANYPOINT_HOST="anypoint.mulesoft.com"
 fi
