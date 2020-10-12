@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>{{GROUP_ID}}</groupId>
-	<artifactId>template-api</artifactId>
+	<groupId>0abf21f8-b147-4948-9fc0-90fa43f9b26a</groupId>
+	<artifactId>hello-mule</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
-	<name>template-api</name>
+	<name>hello-mule</name>
 	<description>This is a skeleton API that serves as a starting point for developers to build their API Led Use Cases</description>
 
 	<properties>
@@ -20,7 +20,7 @@
 	</properties>
 
 	<scm>
-		<developerConnection>scm:git:{{REPO_URL}}</developerConnection>
+		<developerConnection>scm:git:git@github.com:soufi/hello-mule.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -91,7 +91,7 @@
                         
                         <requiredApplicationCoverage>50</requiredApplicationCoverage>
                         <ignoreFlows>
-						  <ignoreFlow>api-template-api-console</ignoreFlow>
+						  <ignoreFlow>api-hello-mule-console</ignoreFlow>
 					    </ignoreFlows>
                         <ignoreFiles>
 						  <ignoreFile>global.xml</ignoreFile>
@@ -182,7 +182,7 @@
 		<repository>
 			<id>anypoint-exchange</id>
 			<name>Anypoint Exchange</name>
-			<url>https://maven.{{ANYPOINT_HOST}}/api/v1/maven</url>
+			<url>https://maven.anypoint.mulesoft.com/api/v1/maven</url>
 			<layout>default</layout>
 		</repository>
 		<repository>

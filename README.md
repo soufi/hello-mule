@@ -1,4 +1,4 @@
-# template-api
+# hello-mule
 
 ## TEMPLATE
 
